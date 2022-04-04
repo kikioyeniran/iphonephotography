@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Achievement extends Model
 {
     use HasFactory;
+
+    /**
+     * Get the user that ownes the achievement.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
