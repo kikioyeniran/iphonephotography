@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace App\Events;
 
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class AchievementUnlocked
+class BadgeUnlocked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,9 +20,13 @@ class AchievementUnlocked
      *
      * @return void
      */
-    public function __construct()
+    public $user;
+    public $badge_name;
+
+    public function __construct($badge_name, User $user)
     {
-        //
+        $this->user = $user;
+        $badge_name = $badge_name;
     }
 
     /**

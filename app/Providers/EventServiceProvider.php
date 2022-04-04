@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Events\LessonWatched;
 use App\Events\CommentWritten;
+use App\Events\AchievementUnlocked;
+use App\Events\BadgeUnlocked;
 use Illuminate\Support\Facades\Event;
 use App\Listeners\StoreCommentWritten;
 use App\Listeners\StoreLessonWatched;
 use App\Listeners\StoreAchievementUnlocked;
-use App\Listeners\StoreBatchUnlocked;
+use App\Listeners\StoreBadgeUnlocked;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -32,8 +34,8 @@ class EventServiceProvider extends ServiceProvider
             StoreAchievementUnlocked::class
         ],
 
-        BatchUnlocked::class => [
-            StoreBatchUnlocked::class
+        BadgeUnlocked::class => [
+            StoreBadgeUnlocked::class
         ],
     ];
 
