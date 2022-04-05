@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\AchievementUnlocked;
 use App\Events\CommentWritten;
+use App\Models\Achievement;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -33,41 +34,11 @@ class StoreCommentWritten
 
         $user_comment_count = count($user->comments);
 
+        // Check for possible achievement unlocked
+        $possible_achievement = Achievement::where('achievement_type', 'comment')->where('criteria_count', $user_comment_count)->first();
 
-        switch ($user_comment_count) {
-            case 1:
-                # code...
-                $achievement_string = 'First Comment Written';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 3:
-                # code...
-                $achievement_string = '3 Comments Written';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 5:
-                # code...
-                $achievement_string = '5 Comments Written';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 10:
-                # code...
-                $achievement_string = '10 Comment Written';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 20:
-                # code...
-                $achievement_string = '20 Comment Written';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            default:
-                # code...
-                break;
+        if (count($possible_achievement) > 0) {
+            event(new AchievementUnlocked($possible_achievement->title, $user));
         }
     }
 }

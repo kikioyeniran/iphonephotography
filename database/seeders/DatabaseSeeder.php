@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Achievement;
+use App\Models\Badge;
 use App\Models\Comment;
 use App\Models\Lesson;
 use App\Models\User;
@@ -17,13 +19,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $lessons = Lesson::factory()
-            ->count(60)
+            ->count(40)
             ->create();
+
         $users = User::factory()
             ->count(5)
             ->create();
-        $comments = Comment::factory()
-            ->count(50)
-            ->create();
+
+        $this->call([
+            AchievementSeeder::class,
+            BadgeSeeder::class,
+        ]);
+
+        // $comments = Comment::factory()
+        //     ->count(50)
+        //     ->create();
     }
 }

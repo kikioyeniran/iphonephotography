@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\AchievementUnlocked;
 use App\Events\LessonWatched;
+use App\Models\Achievement;
 use App\Models\Lesson;
 use App\Models\LessonUser;
 use App\Models\User;
@@ -43,41 +44,10 @@ class StoreLessonWatched
 
         $user_watch_count = count($user->watched);
 
+        $possible_achievement = Achievement::where('achievement_type', 'lesson')->where('criteria_count', $user_watch_count)->first();
 
-        switch ($user_watch_count) {
-            case 1:
-                # code...
-                $achievement_string = 'First Lesson Watched';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 5:
-                # code...
-                $achievement_string = '5 Lessons Watched';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 10:
-                # code...
-                $achievement_string = '10 Lessons Watched';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 25:
-                # code...
-                $achievement_string = '25 Lessons Watched';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            case 50:
-                # code...
-                $achievement_string = '50 Lessons Watched';
-                event(new AchievementUnlocked($achievement_string, $user));
-                break;
-
-            default:
-                # code...
-                break;
+        if (count($possible_achievement) > 0) {
+            event(new AchievementUnlocked($possible_achievement->title, $user));
         }
     }
 }
