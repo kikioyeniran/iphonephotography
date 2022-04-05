@@ -9,6 +9,7 @@ use App\Models\Badge;
 use App\Models\UserAchievement;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class StoreAchievementUnlocked
 {
@@ -30,16 +31,28 @@ class StoreAchievementUnlocked
      */
     public function handle(AchievementUnlocked $event)
     {
+        Log::alert($event->achievement_name);
+        Log::alert($event->user);
+
+        $achievement = Achievement::where('title', $event->achievement_name)->first();
         $user_achievement = new UserAchievement();
-        $user_achievement->title = $event->achievement_name;
+        // $user_achievement->title = $event->achievement_name;
         $user_achievement->user_id = $event->user->id;
+        $user_achievement->achievement_id = $achievement->id;
         $user_achievement->save();
 
-        $user_achievement_count = count($event->user->achievements);
+        Log::alert($event->user->achievements);
+
+        $user_achievement_count = count($event->user->achievements) ?? 0;
+
+        Log::alert($user_achievement_count);
 
         $possible_badge = Badge::where('criteria_count', $user_achievement_count)->first();
 
-        if (count($possible_badge) > 0) {
+        Log::alert($possible_badge);
+
+        // if (count($possible_badge) > 0) {
+        if ($possible_badge != null) {
             event(new BadgeUnlocked($possible_badge->title, $event->user));
         }
 

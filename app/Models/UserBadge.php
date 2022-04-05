@@ -9,13 +9,15 @@ class UserBadge extends Model
 {
     use HasFactory;
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function achievement()
+    public function badge()
     {
-        return $this->belongsTo(Achievement::class);
+        return $this->belongsTo(Badge::class);
     }
 }

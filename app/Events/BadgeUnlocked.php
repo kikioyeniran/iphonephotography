@@ -26,7 +26,7 @@ class BadgeUnlocked
     public function __construct($badge_name, User $user)
     {
         $this->user = $user;
-        $badge_name = $badge_name;
+        $this->badge_name = $badge_name;
     }
 
     /**

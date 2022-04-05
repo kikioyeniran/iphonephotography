@@ -46,7 +46,11 @@ class StoreLessonWatched
 
         $possible_achievement = Achievement::where('achievement_type', 'lesson')->where('criteria_count', $user_watch_count)->first();
 
-        if (count($possible_achievement) > 0) {
+        Log::alert('$possible_achievement');
+        Log::alert($possible_achievement);
+
+        // if (count($possible_achievement) > 0) {
+        if ($possible_achievement != null) {
             event(new AchievementUnlocked($possible_achievement->title, $user));
         }
     }

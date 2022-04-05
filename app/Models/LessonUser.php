@@ -11,6 +11,8 @@ class LessonUser extends Model
 
     protected $table  = 'lesson_user';
 
+    public $timestamps = false;
+
     public function user()
     {
         return $this->belongsTo(User::class);

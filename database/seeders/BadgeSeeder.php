@@ -15,7 +15,7 @@ class BadgeSeeder extends Seeder
     public function run()
     {
         $badges = [
-            ['title' => 'Beginner', 'criteria_count' => 0],
+            ['title' => 'Beginner', 'criteria_count' => 1],
             ['title' => 'Intermediate', 'criteria_count' => 4],
             ['title' => 'Advanced', 'criteria_count' => 8],
             ['title' => 'Master', 'criteria_count' => 10],
