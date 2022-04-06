@@ -24,8 +24,6 @@ class AchievementUnlockedTest extends TestCase
     {
         Event::fake();
 
-        $comment = Comment::factory()->create();
-
         $user = User::inRandomOrder()->first();
 
         $achievement = Achievement::inRandomOrder()->first();
